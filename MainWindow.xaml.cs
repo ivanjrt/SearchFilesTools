@@ -95,5 +95,10 @@ namespace LogSearchApp
             SearchTextBox.Clear();
             ResultListView.ItemsSource = null;
         }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

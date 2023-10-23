@@ -1,50 +1,50 @@
 ﻿<Window x:Class="LogSearchApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Log Search" Height="350" Width="615">
-  <Window.Resources>
-    <Style x:Key="SearchTextBoxStyle" TargetType="TextBox">
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="TextBox">
-            <Grid>
-              <ScrollViewer x:Name="PART_ContentHost" />
-              <TextBlock Name="Watermark" Text="Type your keyword here" Foreground="Gray" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed" FontStyle="Italic" />
-            </Grid>
-            <ControlTemplate.Triggers>
-              <MultiTrigger>
-                <MultiTrigger.Conditions>
-                  <Condition Property="IsFocused" Value="False"/>
-                  <Condition Property="Text" Value=""/>
-                </MultiTrigger.Conditions>
-                <Setter TargetName="Watermark" Property="Visibility" Value="Visible"/>
-              </MultiTrigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-  </Window.Resources>
-  <Grid Background="#FF1D4C17">
-    <TextBlock Text="Drag and drop your logs folder:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="48,29,0,0" FontFamily="Arial Black" FontWeight="Bold" FontSize="14" Foreground="#FF45BD7E" Width="324"/>
+        Title="Log Search" Height="414" Width="715">
+    <Window.Resources>
+        <Style x:Key="SearchTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                            <TextBlock Name="Watermark" Text="Type your keyword here" Foreground="Gray" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed" FontStyle="Italic" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="False"/>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Watermark" Property="Visibility" Value="Visible"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF1D4C17" Margin="0,0,0,-6">
+        <TextBlock Text="Drag and drop your logs folder:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="29,12,0,0" FontFamily="Arial Black" FontWeight="Bold" FontSize="14" Foreground="#FF45BD7E" Width="324"/>
 
-    <ListBox AllowDrop="True" Name="FolderListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="376" Height="35" Margin="37,45,0,0" Drop="FolderListBox_Drop" Foreground="Black"/>
+        <ListBox AllowDrop="True" Name="FolderListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="376" Height="35" Margin="29,28,0,0" Drop="FolderListBox_Drop" Foreground="Black" Background="#FF8C967E"/>
 
-    <!-- Apply the SearchTextBoxStyle to the TextBox -->
-    <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="376" Margin="37,80,0,0" Height="24" Style="{StaticResource SearchTextBoxStyle}" Foreground="#FF45BD7E" />
+        <!-- Apply the SearchTextBoxStyle to the TextBox -->
+        <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="376" Margin="29,92,0,0" Height="24" Style="{StaticResource SearchTextBoxStyle}" Foreground="#FF45BD7E" TextChanged="SearchTextBox_TextChanged" />
 
-    <Button Content="Search" Click="Search_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="24" Margin="418,79,0,0" Background="#FF3F82F1"/>
-    <Button Content="Clear" Click="Clear_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Height="25" Margin="498,79,0,0" Background="#FF3F82F1"/>
+        <Button Content="Search" Click="Search_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="24" Margin="418,92,0,0" Background="#FF3F82F1"/>
+        <Button Content="Clear" Click="Clear_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Height="25" Margin="498,92,0,0" Background="#FF3F82F1"/>
 
-    <ListView x:Name="ResultListView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="562" Height="150" Margin="10,150,0,0">
-      <ListView.View>
-        <GridView>
-          <GridViewColumn Header="Sentence" Width="180" DisplayMemberBinding="{Binding Line}"/>
-          <GridViewColumn Header="File Name" Width="190" DisplayMemberBinding="{Binding FileName}"/>
-          <GridViewColumn Header="File Path" Width="150" DisplayMemberBinding="{Binding Path}" />
-          <GridViewColumn Header="Line Number" Width="80" DisplayMemberBinding="{Binding LineNumber}"/>
-        </GridView>
-      </ListView.View>
-    </ListView>
-  </Grid>
+        <ListView x:Name="ResultListView" HorizontalAlignment="Center" VerticalAlignment="Top" Width="611" Height="184" Margin="0,150,0,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Sentence" Width="180" DisplayMemberBinding="{Binding Line}"/>
+                    <GridViewColumn Header="File Name" Width="190" DisplayMemberBinding="{Binding FileName}"/>
+                    <GridViewColumn Header="File Path" Width="150" DisplayMemberBinding="{Binding Path}" />
+                    <GridViewColumn Header="Line Number" Width="80" DisplayMemberBinding="{Binding LineNumber}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
 </Window>
