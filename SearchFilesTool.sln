@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFilesTool", "SearchFilesTool.csproj", "{5CC27DF5-D2DD-4FF5-BD99-9D6FB88A1823}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CC27DF5-D2DD-4FF5-BD99-9D6FB88A1823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC27DF5-D2DD-4FF5-BD99-9D6FB88A1823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC27DF5-D2DD-4FF5-BD99-9D6FB88A1823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC27DF5-D2DD-4FF5-BD99-9D6FB88A1823}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A70759A-4A95-4118-A7FC-C3912BFD062C}
+	EndGlobalSection
+EndGlobal
