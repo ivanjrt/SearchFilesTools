@@ -100,5 +100,10 @@ namespace LogSearchApp
         {
 
         }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Build 1.2\nThis App will search keywords within log, txt, reg, html, json, and .xml files", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
