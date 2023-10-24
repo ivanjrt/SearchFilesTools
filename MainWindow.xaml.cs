@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -36,7 +37,7 @@ namespace LogSearchApp
             }
         }
 
-        private void Search_Click(object sender, RoutedEventArgs e)
+        private async void Search_Click(object sender, RoutedEventArgs e)
         {
             string logPath = FolderListBox.Items.Count > 0 ? FolderListBox.Items[0] as string : null;
             string searchPattern = SearchTextBox.Text.ToLower();
@@ -47,31 +48,43 @@ namespace LogSearchApp
                 return;
             }
 
-            List<LogResult> results = new List<LogResult>();
+            // Show the progress bar
+            SearchProgressBar.Visibility = Visibility.Visible;
 
-            string[] extensions = { ".log", ".txt", ".reg", ".html", ".json", ".xml" };
-            string[] files = Directory.GetFiles(logPath, "*.*", SearchOption.AllDirectories);
-
-            foreach (var file in files)
+            // Perform the search in the background
+            List<LogResult> results = await Task.Run(() =>
             {
-                if (Array.Exists(extensions, ext => file.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
+                List<LogResult> searchResults = new List<LogResult>();
+
+                string[] extensions = { ".log", ".txt", ".reg", ".html", ".json", ".xml" };
+                string[] files = Directory.GetFiles(logPath, "*.*", SearchOption.AllDirectories);
+
+                foreach (var file in files)
                 {
-                    string[] lines = File.ReadAllLines(file);
-                    for (int lineNumber = 0; lineNumber < lines.Length; lineNumber++)
+                    if (Array.Exists(extensions, ext => file.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
                     {
-                        if (lines[lineNumber].ToLower().Contains(searchPattern))
+                        string[] lines = File.ReadAllLines(file);
+                        for (int lineNumber = 0; lineNumber < lines.Length; lineNumber++)
                         {
-                            results.Add(new LogResult
+                            if (lines[lineNumber].ToLower().Contains(searchPattern))
                             {
-                                Line = lines[lineNumber],
-                                Path = file,
-                                LineNumber = lineNumber + 1,
-                                FileName = Path.GetFileName(file)
-                            });
+                                searchResults.Add(new LogResult
+                                {
+                                    Line = lines[lineNumber],
+                                    Path = file,
+                                    LineNumber = lineNumber + 1,
+                                    FileName = Path.GetFileName(file)
+                                });
+                            }
                         }
                     }
                 }
-            }
+
+                return searchResults;
+            });
+
+            // Hide the progress bar after the search is completed
+            SearchProgressBar.Visibility = Visibility.Collapsed;
 
             if (results.Count == 0)
             {
@@ -87,6 +100,8 @@ namespace LogSearchApp
 
             ResultListView.ItemsSource = results;
         }
+
+
 
 
         private void Clear_Click(object sender, RoutedEventArgs e)
