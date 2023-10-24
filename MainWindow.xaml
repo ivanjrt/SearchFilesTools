@@ -36,13 +36,13 @@
         <ProgressBar Name="SearchProgressBar" IsIndeterminate="True" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="10" Margin="29,120,0,0"/>
 
 
-        <ListView x:Name="ResultListView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="609" Height="184" Margin="29,149,0,0">
+        <ListView x:Name="ResultListView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="651" Height="197" Margin="29,149,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Sentence" Width="180" DisplayMemberBinding="{Binding Line}"/>
-                    <GridViewColumn Header="File Name" Width="190" DisplayMemberBinding="{Binding FileName}"/>
-                    <GridViewColumn Header="File Path" Width="150" DisplayMemberBinding="{Binding Path}" />
-                    <GridViewColumn Header="Line Number" Width="80" DisplayMemberBinding="{Binding LineNumber}"/>
+                    <GridViewColumn Header="Sentence" Width="220" DisplayMemberBinding="{Binding Line}"/>
+                    <GridViewColumn Header="File Name" Width="145" DisplayMemberBinding="{Binding FileName}"/>
+                    <GridViewColumn Header="File Path" Width="210" DisplayMemberBinding="{Binding Path}" />
+                    <GridViewColumn Header="Line Number" Width="72" DisplayMemberBinding="{Binding LineNumber}"/>
                 </GridView>
             </ListView.View>
         </ListView>

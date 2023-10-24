@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -99,10 +100,29 @@ namespace LogSearchApp
             }
 
             ResultListView.ItemsSource = results;
+
+            // Attach a click event to open files in Notepad
+            ResultListView.MouseDoubleClick += ResultListView_MouseDoubleClick;
         }
 
-
-
+        private void ResultListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedItem = ResultListView.SelectedItem as LogResult;
+            if (selectedItem != null)
+            {
+                if (File.Exists(selectedItem.Path))
+                {
+                    try
+                    {
+                        Process.Start("notepad.exe", selectedItem.Path);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error opening file with Notepad: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
