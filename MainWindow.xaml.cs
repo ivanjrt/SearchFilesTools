@@ -101,6 +101,9 @@ namespace LogSearchApp
 
             ResultListView.ItemsSource = results;
 
+            // Update the result count TextBlock
+            ResultCountTextBlock.Text = $"Results Found: {results.Count}";
+
             // Attach a click event to open files in Notepad
             ResultListView.MouseDoubleClick += ResultListView_MouseDoubleClick;
         }
@@ -129,6 +132,7 @@ namespace LogSearchApp
             FolderListBox.Items.Clear();
             SearchTextBox.Clear();
             ResultListView.ItemsSource = null;
+            ResultCountTextBlock.Text = "Results Found: 0";
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
