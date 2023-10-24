@@ -142,7 +142,7 @@ namespace LogSearchApp
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Build 1.2\nThis App will search keywords within log, txt, reg, html, json, and .xml files", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Build 2.0\n\nThis App will search keywords within log, txt, reg, html, json, and .xml files\n\nThe author assumes no responsibility or liability for any errors using this App", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
