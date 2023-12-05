@@ -17,7 +17,7 @@ or<br/>
 
 * Due to the fact that I don't have money to buy my own _Code Signing Certificate_ you will 💯 recieve this the first time you run the app<br/>
 ![image](https://github.com/ivanjrt/SearchFilesTools/assets/44326428/381bb43a-4e87-4db2-b0a4-ce8f7e536062)<br/>
-**Fix: **Click More info > Run Anyway<br/>
+**Fix**: **Click More info > Run Anyway<br/>
 
 
 
