@@ -7,22 +7,23 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using evtxToXml;
 
 namespace LogSearchApp
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
         public class LogResult
         {
             public string Line { get; set; }
             public string Path { get; set; }
             public int LineNumber { get; set; }
             public string FileName { get; set; }
+        }
+
+        public MainWindow()
+        {
+            InitializeComponent();
         }
 
         private void FolderListBox_Drop(object sender, DragEventArgs e)
@@ -52,13 +53,23 @@ namespace LogSearchApp
             // Show the progress bar
             SearchProgressBar.Visibility = Visibility.Visible;
 
+            // Check for .evtx files and convert them to XML
+            await EvtxToXmlConverter.ConvertEvtxFiles(logPath, progress =>
+            {
+                // Update the progress bar for evtx to XML conversion
+                Dispatcher.Invoke(() =>
+                {
+                    SearchProgressBar.Value = progress;
+                });
+            });
+
             // Perform the search in the background
             List<LogResult> results = await Task.Run(() =>
             {
-                List<LogResult> searchResults = new List<LogResult>();
-
                 string[] extensions = { ".log", ".txt", ".reg", ".html", ".json", ".xml" };
                 string[] files = Directory.GetFiles(logPath, "*.*", SearchOption.AllDirectories);
+
+                List<LogResult> searchResults = new List<LogResult>();
 
                 foreach (var file in files)
                 {
@@ -142,7 +153,7 @@ namespace LogSearchApp
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Build 2.0\n\nThis App will search keywords within log, txt, reg, html, json, and .xml files\n\nThe author assumes no responsibility or liability for any errors using this App", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Build 3.0\n\nThis App will search keywords within log, txt, reg, html, json, and .xml files\nThis App will convert evtx files to xml for better handling\n\nThe author assumes no responsibility or liability for any errors using this App", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
