@@ -11,7 +11,7 @@ ps. (_Going after EVTX files directly make things very complicated logically and
 * Depending on your browser settings you might get a notification about a malicious file<br/>
 ![image](https://github.com/ivanjrt/SearchFilesTools/assets/44326428/e8818b97-edc0-4a3c-82aa-ac5e23ed0db0)<br/>
 **Fix**:<br/>
-1 - But if you trust my code you feel free to get it 🙂<br/>
+1 - If you trust my code you feel free to get it 🙂<br/>
 or<br/>
 2 - You can always opt to not use my tool 🙂<br/>
 
