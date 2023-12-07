@@ -57,9 +57,8 @@
         <ListView x:Name="ResultListView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="770" Height="264" Margin="10,247,0,0" Grid.RowSpan="3">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Sentence" Width="220" DisplayMemberBinding="{Binding Line}"/>
-                    <GridViewColumn Header="File Name" Width="235" DisplayMemberBinding="{Binding FileName}"/>
-                    <GridViewColumn Header="File Path" Width="235" DisplayMemberBinding="{Binding Path}" />
+                    <GridViewColumn Header="Sentence" Width="350" DisplayMemberBinding="{Binding Line}"/>
+                    <GridViewColumn Header="File Path" Width="340" DisplayMemberBinding="{Binding Path}" />
                     <GridViewColumn Header="Line Number" Width="72" DisplayMemberBinding="{Binding LineNumber}"/>
                 </GridView>
             </ListView.View>
