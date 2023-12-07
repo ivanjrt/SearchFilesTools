@@ -153,7 +153,7 @@ namespace LogSearchApp
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Build 3.0\n\nThis App will search keywords within log, txt, reg, html, json, and .xml files\nThis App will convert evtx files to xml for better handling\n\nThe author assumes no responsibility or liability for any errors using this App", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Build 3.5\n\nThis App will search keywords within log, txt, reg, html, json, and .xml files\nThis App will convert evtx files to xml for better handling\n\nThe author assumes no responsibility or liability for any errors using this App", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void FolderListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
