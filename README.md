@@ -5,7 +5,7 @@
 **Tool Objective:** 🧐 To search a specific keyword within log files such (Log, Txt, Reg, Html, Json, Xml)<br/>
 As this app is going trough the files, it will convert evtx files to xml for better handling <br/>
 ps. (_Going after EVTX files directly make things very complicated logically and some features non-feasable_)<br/>
-![image](https://github.com/ivanjrt/SearchFilesTools/assets/44326428/1c9c1578-6ee6-4c98-babb-9894f95ecb6e)
+![image](https://github.com/ivanjrt/SearchFilesTools/assets/44326428/daad3e13-723d-457b-8957-aa7209688a2e)
 
 # Security Notes:
 * Depending on your browser settings you might get a notification about a malicious file<br/>
