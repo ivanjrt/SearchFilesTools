@@ -26,7 +26,7 @@
             <RowDefinition Height="143*"/>
             <RowDefinition Height="14*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Drag and drop your logs folder:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,109,0,0" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Foreground="#FF99BCD6" Width="324"/>
+        <TextBlock Text="Drag and drop your logs folder or Zip File:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,109,0,0" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Foreground="#FF99BCD6" Width="324"/>
 
         <ListBox AllowDrop="True" Name="FolderListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="407" Height="59" Margin="14,133,0,0" Drop="FolderListBox_Drop" Background="#FF203746" Foreground="#FF99BCD6" FontWeight="Bold" FontStyle="Italic" SelectionChanged="FolderListBox_SelectionChanged" RenderTransformOrigin="0.5,0.5">
             <ListBox.RenderTransform>
@@ -52,7 +52,7 @@
         <Button Content="Search" Click="Search_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="24" Margin="620,218,0,0" Background="#FF3F82F1" BorderBrush="Transparent" FontSize="14" Foreground="White" />
         <Button Content="Clear" Click="Clear_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Height="25" Margin="700,218,0,0" Background="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderBrush="Transparent" FontSize="14" Foreground="White" />
         <ProgressBar Name="SearchProgressBar" IsIndeterminate="True" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="10" Margin="680,86,0,0"/>
-        <TextBlock Name="ResultCountTextBlock" HorizontalAlignment="Left" Margin="10,133,0,0" VerticalAlignment="Top" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Width="168" Grid.Row="2" Foreground="#FF99BCD6"/>
+        <TextBlock Name="ResultCountTextBlock" HorizontalAlignment="Left" Margin="10,133,0,0" VerticalAlignment="Top" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Width="289" Grid.Row="2" Foreground="#FF99BCD6"/>
 
         <ListView x:Name="ResultListView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="770" Height="264" Margin="10,247,0,0" Grid.RowSpan="3">
             <ListView.View>
@@ -69,12 +69,19 @@
                 Margin="10,10,543,0"
                 FontSize="28" Foreground="White"/>
 
-            <Button Content="❕" HorizontalAlignment="Right" 
+            <Button Content="!" HorizontalAlignment="Right" 
                 VerticalAlignment="Top"
                 Margin="0,10,10,0" 
                 Background="Transparent" BorderBrush="White"
                 Foreground="White" FontSize="16" 
                 Click="About_Click" />
+
+            <Button Content="?" HorizontalAlignment="Right" 
+                VerticalAlignment="Top"
+                Margin="0,10,24,0" 
+                Background="Transparent" BorderBrush="White"
+                Foreground="White" FontSize="16" 
+                Click="Help_Click" />
         </Grid>
     </Grid>
 </Window>

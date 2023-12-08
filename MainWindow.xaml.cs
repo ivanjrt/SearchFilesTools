@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using evtxToXml;
+using System.IO.Compression;
+
 
 namespace LogSearchApp
 {
@@ -49,19 +51,53 @@ namespace LogSearchApp
                 }
             }
         }
-
-        private void FolderListBox_Drop(object sender, DragEventArgs e)
+        private async void FolderListBox_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] folders = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (folders.Length > 0)
+                string[] droppedItems = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (droppedItems.Length > 0)
                 {
+                    string path = droppedItems[0];
+
+                    // Check if the dropped item is a zip file
+                    if (Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Display message and activate progress bar during uncompressing
+                        ResultCountTextBlock.Text = "Uncompressing...";
+                        SearchProgressBar.Visibility = Visibility.Visible;
+
+                        try
+                        {
+                            // Extract the contents of the zip file to a folder with the same path
+                            string extractPath = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
+                            await Task.Run(() => ZipFile.ExtractToDirectory(path, extractPath));
+
+                            // Update the log path to the extracted folder
+                            path = extractPath;
+
+                            // Hide progress bar/results after uncompressing
+                            SearchProgressBar.Visibility = Visibility.Collapsed;
+                            ResultCountTextBlock.Text = "File Uncompressed and Ready to Search";
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle the exception (display or log the error)
+                            MessageBox.Show($"Error opening file with Notepad: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                            // Reset UI state
+                            ResultCountTextBlock.Text = "Error during extraction";
+                            SearchProgressBar.Visibility = Visibility.Collapsed;
+                            return;
+                        }
+                    }
+
                     FolderListBox.Items.Clear();
-                    FolderListBox.Items.Add(folders[0]);
+                    FolderListBox.Items.Add(path);
                 }
             }
         }
+
 
         private async void Search_Click(object sender, RoutedEventArgs e)
         {
@@ -183,6 +219,12 @@ namespace LogSearchApp
         private void FolderListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("If extracting a Zip file, ensure that the extracted content does not reside in the same location with an identical name as the " +
+                "original Zip file","Help", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
