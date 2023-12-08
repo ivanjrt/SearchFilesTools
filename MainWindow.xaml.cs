@@ -15,10 +15,9 @@ namespace LogSearchApp
     {
         public class LogResult
         {
-            public string Line { get; set; }
+            public string Sentence { get; set; }
             public string Path { get; set; }
             public int LineNumber { get; set; }
-            public string FileName { get; set; }
         }
 
         public MainWindow()
@@ -34,7 +33,7 @@ namespace LogSearchApp
             // Check if Ctrl + C is pressed
             if (e.Key == Key.C && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
-                // Copy the selected item's "Line" to the clipboard
+                // Copy the selected item's "Sentence" to the clipboard
                 CopySelectedItemToClipboard();
             }
         }
@@ -46,7 +45,7 @@ namespace LogSearchApp
                 var selectedItem = ResultListView.SelectedItems[0] as LogResult;
                 if (selectedItem != null)
                 {
-                    Clipboard.SetText(selectedItem.Line);
+                    Clipboard.SetText(selectedItem.Sentence);
                 }
             }
         }
@@ -107,10 +106,9 @@ namespace LogSearchApp
                             {
                                 searchResults.Add(new LogResult
                                 {
-                                    Line = lines[lineNumber],
+                                    Sentence = lines[lineNumber],
                                     Path = file,
                                     LineNumber = lineNumber + 1,
-                                    FileName = Path.GetFileName(file)
                                 });
                             }
                         }
@@ -128,10 +126,9 @@ namespace LogSearchApp
                 // Display a message when no results are found
                 results.Add(new LogResult
                 {
-                    Line = "Nothing was found under that keyword",
+                    Sentence = "Nothing was found under that keyword",
                     Path = "",
                     LineNumber = 0,
-                    FileName = ""
                 });
             }
 
@@ -178,7 +175,7 @@ namespace LogSearchApp
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Build 4.0" +
+            MessageBox.Show("Build 4.5" +
                 "\n\nThis App will search keywords within log, txt, reg, html, json, and .xml files\nThis App will convert evtx files to xml for better handling" +
                 "\n\nThe author assumes no responsibility or liability for any errors using this App", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
