@@ -83,12 +83,11 @@ namespace LogSearchApp
                         catch (Exception ex)
                         {
                             // Handle the exception (display or log the error)
-                            MessageBox.Show($"Error opening file with Notepad: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"Error during extraction: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Please Unzip the file Manually then re-open the program and add the folder to search Error:001", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                            // Reset UI state
-                            ResultCountTextBlock.Text = "Error during extraction";
-                            SearchProgressBar.Visibility = Visibility.Collapsed;
-                            return;
+                            // Exit the application
+                            Environment.Exit(1);
                         }
                     }
 
@@ -97,6 +96,7 @@ namespace LogSearchApp
                 }
             }
         }
+
 
 
         private async void Search_Click(object sender, RoutedEventArgs e)
