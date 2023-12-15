@@ -111,6 +111,7 @@ namespace LogSearchApp
             }
 
             // Show the progress bar
+            ResultCountTextBlock.Text = "Searching...";
             SearchProgressBar.Visibility = Visibility.Visible;
 
             // Check for .evtx files and convert them to XML
