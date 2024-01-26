@@ -54,7 +54,7 @@
         <ProgressBar Name="SearchProgressBar" IsIndeterminate="True" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="10" Margin="680,86,0,0"/>
         <TextBlock Name="ResultCountTextBlock" HorizontalAlignment="Left" Margin="10,119,0,0" VerticalAlignment="Top" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Width="289" Grid.Row="2" Foreground="#FF99BCD6"/>
 
-        <ListView x:Name="ResultListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="264" Margin="10,247,0,0" Grid.RowSpan="3">
+        <ListView x:Name="ResultListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="264" Margin="10,247,0,0" Grid.RowSpan="3" Background="#FF1B1B1B" Foreground="#FF807023" FontWeight="Bold">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Sentence" Width="Auto" DisplayMemberBinding="{Binding Sentence}"/>
