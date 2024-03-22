@@ -226,7 +226,7 @@ namespace LogSearchApp
 
         private void Help_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("If extracting a Zip file, ensure that the extracted content does not reside in the same location with an identical name as the " +
+            MessageBox.Show("If issues extracting a Zip file: ensure that the extracted content does not reside in the same location with an identical name as the " +
                 "original Zip file, otherwise try to unzip it manually","Help", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void SearchTextBox_Keydown(object sender, KeyEventArgs e)
