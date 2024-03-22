@@ -214,7 +214,7 @@ namespace LogSearchApp
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Build 7.8" +
+            MessageBox.Show("Build 8" +
                 "\n\nThis App will search keywords within log, txt, reg, html, json, and .xml files\nThis App will convert evtx files to xml for better handling" +
                 "\n\nThe author assumes no responsibility or liability for any errors using this App", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -227,7 +227,7 @@ namespace LogSearchApp
         private void Help_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("If extracting a Zip file, ensure that the extracted content does not reside in the same location with an identical name as the " +
-                "original Zip file, otherwise try to unzip manually","Help", MessageBoxButton.OK, MessageBoxImage.Information);
+                "original Zip file, otherwise try to unzip it manually","Help", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void SearchTextBox_Keydown(object sender, KeyEventArgs e)
         {
