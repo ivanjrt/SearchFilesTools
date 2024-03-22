@@ -20,6 +20,6 @@ or<br/>
 **Click More info > Run Anyway<br/>
 
 # Known Bug:
-- Depending on the type of compressing tool that was used to zip the file,
-it might be incompatible with the one built-in In Windows, such as logs from another Platform,
-therefore you might need 7Zip and just unzip it manually
+- Depending on the type of compressing tool that was used to zip the file,<br/>
+it might be incompatible with the one built-in In Windows, such as logs from another Platform,<br/>
+therefore you might need 7Zip and just unzip it manually<br/>
