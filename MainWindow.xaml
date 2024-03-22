@@ -40,7 +40,7 @@
         </ListBox>
 
         <!-- Apply the SearchTextBoxStyle to the TextBox -->
-        <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="392" Margin="10,218,0,0" Height="24" TextChanged="SearchTextBox_TextChanged" FontFamily="Segoe UI" RenderTransformOrigin="0.501,1.556" BorderBrush="#FFA97F22" Foreground="Black" FontWeight="Bold" FontSize="14">
+        <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="392" Margin="10,218,0,0" Height="24" TextChanged="SearchTextBox_TextChanged" FontFamily="Segoe UI" RenderTransformOrigin="0.501,1.556" BorderBrush="#FFA97F22" Foreground="Black" FontWeight="Bold" FontSize="14" KeyDown="SearchTextBox_Keydown">
             <TextBox.SelectionBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
