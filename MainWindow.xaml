@@ -19,42 +19,149 @@
             </Setter>
         </Style>
     </Window.Resources>
+
     <Grid Background="#FF121C27" Margin="0,0,-31,-63">
         <Grid.RowDefinitions>
-            <RowDefinition Height="350*"/>
+            <RowDefinition Height="80"/>
+            <!-- Fixed height for header -->
+            <RowDefinition Height="140"/>
+            <!-- Fixed height for drag-drop and search area -->
+            <RowDefinition Height="Auto"/>
+            <!-- For ResultCountTextBlock -->
             <RowDefinition Height="*"/>
-            <RowDefinition Height="143*"/>
-            <RowDefinition Height="14*"/>
+            <!-- Remaining space for ResultListView -->
         </Grid.RowDefinitions>
-        <TextBlock Text="Drag and drop your logs folder or Zip File:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,109,0,0" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Foreground="#FF99BCD6" Width="324"/>
 
-        <ListBox AllowDrop="True" Name="FolderListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="407" Height="59" Margin="14,133,0,0" Drop="FolderListBox_Drop" Background="#FF203746" Foreground="#FF99BCD6" FontWeight="Bold" FontStyle="Italic" SelectionChanged="FolderListBox_SelectionChanged" RenderTransformOrigin="0.5,0.5">
-            <ListBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="0.147"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="0.497"/>
-                </TransformGroup>
-            </ListBox.RenderTransform>
-        </ListBox>
+        <!-- Header Grid in Row 0 -->
+        <Grid Grid.Row="0" Background="#171717" Margin="3,10,0,8">
+            <TextBlock Text="Log Search"
+                VerticalAlignment="Top"
+                Margin="10,10,543,0"
+                FontSize="32"
+                Foreground="White" FontFamily="Bell MT"/>
 
-        <!-- Apply the SearchTextBoxStyle to the TextBox -->
-        <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="392" Margin="10,218,0,0" Height="24" TextChanged="SearchTextBox_TextChanged" FontFamily="Segoe UI" RenderTransformOrigin="0.501,1.556" BorderBrush="#FFA97F22" Foreground="Black" FontWeight="Bold" FontSize="14" KeyDown="SearchTextBox_Keydown">
-            <TextBox.SelectionBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FF983C3C" Offset="1"/>
-                </LinearGradientBrush>
-            </TextBox.SelectionBrush>
-        </TextBox>
+            <Button Content="!"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Top"
+              Margin="0,10,61,0"
+              Background="Transparent"
+              BorderBrush="White"
+              Foreground="White"
+              FontSize="16"
+              Click="About_Click" />
 
-        <Button Content="Search" Click="Search_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="24" Margin="620,218,0,0" Background="#FF3F82F1" BorderBrush="Transparent" FontSize="14" Foreground="White" />
-        <Button Content="Clear" Click="Clear_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Height="25" Margin="700,218,0,0" Background="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderBrush="Transparent" FontSize="14" Foreground="White" />
-        <ProgressBar Name="SearchProgressBar" IsIndeterminate="True" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="10" Margin="680,86,0,0"/>
-        <TextBlock Name="ResultCountTextBlock" HorizontalAlignment="Left" Margin="10,119,0,0" VerticalAlignment="Top" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Width="289" Grid.Row="2" Foreground="#FF99BCD6"/>
+            <Button Content="?"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Top"
+              Margin="0,10,75,0"
+              Background="Transparent"
+              BorderBrush="White"
+              Foreground="White"
+              FontSize="16"
+              Click="Help_Click" />
+        </Grid>
 
-        <ListView x:Name="ResultListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="264" Margin="10,247,0,0" Grid.RowSpan="3" Background="#FF1B1B1B" Foreground="#FF807023" FontWeight="Bold">
+        <!-- Drag and drop area and search controls in Row 1 -->
+        <StackPanel Grid.Row="1" Margin="10,0,34,0">
+            <TextBlock Text="Drag and drop your logs folder or Zip File:"
+              FontFamily="Bell MT"
+              FontWeight="Bold"
+              FontSize="18"
+              Foreground="#FF99BCD6"/>
+
+            <ListBox AllowDrop="True"
+             x:Name="FolderListBox"
+             Height="59"
+             Margin="4,5,407,0"
+             Background="#FF203746"
+             Foreground="#FF99BCD6"
+             FontWeight="Bold"
+             FontStyle="Italic"
+             Drop="FolderListBox_Drop"
+             SelectionChanged="FolderListBox_SelectionChanged">
+                <ListBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.147"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0.497"/>
+                    </TransformGroup>
+                </ListBox.RenderTransform>
+            </ListBox>
+
+            <Label Content="Input your keyword: "
+           FontFamily="Bell MT"
+           FontWeight="Bold"
+           Foreground="#FF99BCD6"
+           FontSize="18"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="SearchTextBox"
+                 Grid.Column="0"
+                 Height="25"
+                 Margin="0,0,20,0"
+                 FontFamily="Bell MT"
+                 FontWeight="Bold"
+                 FontSize="18"
+                 BorderBrush="#FFA97F22"
+                 Foreground="Black"
+                 TextChanged="SearchTextBox_TextChanged"
+                 KeyDown="SearchTextBox_Keydown">
+                    <TextBox.SelectionBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Black"/>
+                            <GradientStop Color="#FF983C3C" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBox.SelectionBrush>
+                </TextBox>
+
+                <Button Grid.Column="1"
+                Content="Search"
+                Width="75"
+                Height="25"
+                Margin="0,0,5,0"
+                Background="#FF3F82F1"
+                BorderBrush="Transparent"
+                FontSize="18"
+                Foreground="White"
+                Click="Search_Click" 
+                FontFamily="Bell MT"/>
+
+                <Button Grid.Column="2"
+                Content="Clear"
+                Width="75"
+                Height="25"
+                Background="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}"
+                BorderBrush="Transparent"
+                FontSize="18"
+                Foreground="White"
+                Click="Clear_Click" 
+                FontFamily="Bell MT"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- Result count in Row 2 -->
+        <TextBlock Name="ResultCountTextBlock"
+               Grid.Row="2"
+               Margin="10,10,0,5"
+               FontFamily="Segoe UI"
+               FontWeight="Bold"
+               FontSize="14"
+               Foreground="#FF99BCD6"/>
+
+        <!-- Results ListView in Row 3 -->
+        <ListView x:Name="ResultListView"
+              Grid.Row="3"
+              Margin="10,5,45,100"
+              Background="#FF1B1B1B"
+              Foreground="#FF807023"
+              FontWeight="Bold" FontFamily="Bell MT" FontSize="18">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Sentence" Width="Auto" DisplayMemberBinding="{Binding Sentence}"/>
@@ -63,25 +170,15 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="Input your keyword: " HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" FontFamily="Segoe UI" FontWeight="Bold" Foreground="#FF99BCD6" FontSize="14"/>
-        <Grid Grid.Row="0" Background="#171717" Margin="3,10,0,389">
-            <TextBlock Text="Log Search" VerticalAlignment="Top"
-                Margin="10,10,543,0"
-                FontSize="28" Foreground="White"/>
 
-            <Button Content="!" HorizontalAlignment="Right" 
-                VerticalAlignment="Top"
-                Margin="0,10,61,0" 
-                Background="Transparent" BorderBrush="White"
-                Foreground="White" FontSize="16" 
-                Click="About_Click" />
-
-            <Button Content="?" HorizontalAlignment="Right" 
-                VerticalAlignment="Top"
-                Margin="0,10,75,0" 
-                Background="Transparent" BorderBrush="White"
-                Foreground="White" FontSize="16" 
-                Click="Help_Click" />
-        </Grid>
+        <ProgressBar Name="SearchProgressBar"
+                 Grid.Row="1"
+                 IsIndeterminate="True"
+                 Visibility="Collapsed"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Width="100"
+                 Height="10"
+                 Margin="0,10,10,0"/>
     </Grid>
 </Window>
