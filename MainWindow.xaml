@@ -179,6 +179,6 @@
                  VerticalAlignment="Top"
                  Width="100"
                  Height="10"
-                 Margin="0,10,10,0"/>
+                 Margin="0,10,115,0"/>
     </Grid>
 </Window>

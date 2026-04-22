@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using evtxToXml;
 using System.IO.Compression;
+using SearchFilesTool;
 
 
 namespace LogSearchApp
@@ -23,10 +24,19 @@ namespace LogSearchApp
 
         public MainWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+                Logger.Info("MainWindow initialized successfully");
 
-            // Attach the PreviewKeyDown event to ResultListView
-            ResultListView.PreviewKeyDown += ResultListView_PreviewKeyDown;
+                // Attach the PreviewKeyDown event to ResultListView
+                ResultListView.PreviewKeyDown += ResultListView_PreviewKeyDown;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error during MainWindow initialization", ex);
+                throw;
+            }
         }
 
         private void ResultListView_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -70,7 +80,12 @@ namespace LogSearchApp
                         {
                             // Extract the contents of the zip file to a folder with the same path
                             string extractPath = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
-                            await Task.Run(() => ZipFile.ExtractToDirectory(path, extractPath));
+
+                            // Skip extraction if it already exists
+                            if (!Directory.Exists(extractPath))
+                            {
+                                await Task.Run(() => ZipFile.ExtractToDirectory(path, extractPath));
+                            }
 
                             // Update the log path to the extracted folder
                             path = extractPath;
@@ -78,6 +93,13 @@ namespace LogSearchApp
                             // Hide progress bar/results after uncompressing
                             SearchProgressBar.Visibility = Visibility.Collapsed;
                             ResultCountTextBlock.Text = "File Uncompressed and Ready to Search";
+                        }
+                        catch (OutOfMemoryException)
+                        {
+                            MessageBox.Show("Out of memory while extracting the zip file. The file may be too large.\n\nPlease try unzipping manually.", 
+                                "Memory Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            SearchProgressBar.Visibility = Visibility.Collapsed;
+                            return;
                         }
                         catch (Exception ex)
                         {
@@ -113,44 +135,82 @@ namespace LogSearchApp
             ResultCountTextBlock.Text = "Searching...";
             SearchProgressBar.Visibility = Visibility.Visible;
 
-            // Check for .evtx files and convert them to XML
-            await EvtxToXmlConverter.ConvertEvtxFiles(logPath, progress =>
+            try
             {
-                // Update the progress bar for evtx to XML conversion
-                Dispatcher.Invoke(() =>
+                // Check for .evtx files and convert them to XML with error handling
+                await EvtxToXmlConverter.ConvertEvtxFiles(logPath, progress =>
                 {
-                    SearchProgressBar.Value = progress;
+                    // Update the progress bar for evtx to XML conversion
+                    Dispatcher.Invoke(() =>
+                    {
+                        SearchProgressBar.Value = progress;
+                    });
                 });
-            });
-
-
+            }
+            catch (OutOfMemoryException)
+            {
+                MessageBox.Show("Out of memory while processing event log files. Some .evtx files may be too large to convert.\n\nTry removing or archiving some log files and retry.", 
+                    "Memory Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                SearchProgressBar.Visibility = Visibility.Collapsed;
+                ResultCountTextBlock.Text = "Search failed due to memory constraints.";
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error processing event logs: {ex.Message}\n\nProceeding with regular file search.", 
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
             // Perform the search in the background
             List<LogResult> results = await Task.Run(() =>
             {
                 string[] extensions = { ".log", ".txt", ".reg", ".html", ".json", ".xml" };
-                string[] files = Directory.GetFiles(logPath, "*.*", SearchOption.AllDirectories);
-
                 List<LogResult> searchResults = new List<LogResult>();
 
-                foreach (var file in files)
+                try
                 {
-                    if (Array.Exists(extensions, ext => file.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
+                    string[] files = Directory.GetFiles(logPath, "*.*", SearchOption.AllDirectories);
+
+                    foreach (var file in files)
                     {
-                        string[] lines = File.ReadAllLines(file);
-                        for (int lineNumber = 0; lineNumber < lines.Length; lineNumber++)
+                        if (Array.Exists(extensions, ext => file.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
                         {
-                            if (lines[lineNumber].ToLower().Contains(searchPattern))
+                            try
                             {
-                                searchResults.Add(new LogResult
+                                string[] lines = File.ReadAllLines(file);
+                                for (int lineNumber = 0; lineNumber < lines.Length; lineNumber++)
                                 {
-                                    Sentence = lines[lineNumber],
-                                    Path = file,
-                                    LineNumber = lineNumber + 1,
-                                });
+                                    if (lines[lineNumber].ToLower().Contains(searchPattern))
+                                    {
+                                        searchResults.Add(new LogResult
+                                        {
+                                            Sentence = lines[lineNumber],
+                                            Path = file,
+                                            LineNumber = lineNumber + 1,
+                                        });
+                                    }
+                                }
+                            }
+                            catch (OutOfMemoryException)
+                            {
+                                // Skip files that are too large to process
+                                System.Diagnostics.Debug.WriteLine($"File too large to process: {file}");
+                            }
+                            catch (Exception ex)
+                            {
+                                // Skip files that cannot be read
+                                System.Diagnostics.Debug.WriteLine($"Error reading file {file}: {ex.Message}");
                             }
                         }
                     }
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Access denied to directory: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error during search: {ex.Message}");
                 }
 
                 return searchResults;
@@ -214,7 +274,7 @@ namespace LogSearchApp
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Build 10" +
+            MessageBox.Show("Build 11" +
                 "\n\nThis App will search keywords within log, txt, reg, html, json, and .xml files\nThis App will convert evtx files to xml for better handling" +
                 "\n\nThe author assumes no responsibility or liability for any errors using this App", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
