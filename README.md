@@ -1,4 +1,7 @@
-# SearchFilesTool (Log Search) - Build 11
+# SearchFilesTool (Log Search)
+
+<img width="802" height="637" alt="image" src="https://github.com/user-attachments/assets/0753fc5c-8946-476a-986d-38c363c85dbb" />
+
 
 A Windows desktop application for searching keywords across log files, text files, and Windows Event Logs. Built with WPF (.NET Framework 4.7.2) and licensed under the MIT License.
 
